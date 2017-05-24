@@ -209,17 +209,42 @@ int main() {
 
   float u[size], v[size], u_prev[size], v_prev[size];
   double dt = 0.1;
-  double visc = 0.01;
-  double diff = 0.05;
+  double visc = 0.00;
+  double diff = 0.00;
+
+  int cube_bl_x = 50;
+  int cube_bl_y = 150;
+  int cube_length = 30;
+
+  float cube_vel_x = -0.1;
+  float cube_vel_y = -0.1;
 
   float dens[size], dens_prev[size];
-  for (int i = 0; i < size; i++) {
-    dens_prev[i] = random_float(0, 255);
-    dens[i] = random_float(0, 255);
-    u_prev[i] = random_float(0, 1);
-    v_prev[i] = random_float(0, 1);
-    u[i] = random_float(0, 1);
-    v[i] = random_float(0, 1);
+
+  for (int i = 1; i <= N; i++) {
+    for (int j = 1; j <= N; j++) {
+
+      if ((cube_bl_x <= i && i <= cube_bl_x + cube_length) &&
+	  (cube_bl_y <= j && j <= cube_bl_y + cube_length)) {
+
+	cout << "occupied!" << endl;
+	dens_prev[IX(i, j)] = 255.0; //random_float(0, 255);
+	dens[IX(i, j)] = 255.0; //random_float(0, 255);
+	u_prev[IX(i, j)] = cube_vel_x;//random_float(0, 1);
+	v_prev[IX(i, j)] = cube_vel_y;//-1*u_prev[i];//random_float(0, 1);
+	u[IX(i, j)] = cube_vel_x;//random_float(0, 1);
+	v[IX(i, j)] = cube_vel_y;//random_float(0, 1);
+
+      } else {
+	dens_prev[IX(i, j)] = 0;
+	dens[IX(i, j)] = 0;
+	u_prev[IX(i, j)] = 0;
+	v_prev[IX(i, j)] = 0;
+	u[IX(i, j)] = 0;
+	v[IX(i, j)] = 0;
+	
+      }
+    }
 
   }
 
