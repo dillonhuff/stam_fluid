@@ -111,16 +111,16 @@ void dens_step(const int N,
 	       float* x, float* x0, float* u, float* v,
 	       const float diff,
 	       const float dt) {
-  add_source(N, x, x0, dt);
+  //add_source(N, x, x0, dt);
 
-  SWAP(x0, x);
+  //SWAP(x0, x);
 
   cout << "starting diffuse" << endl;
-  diffuse(N, 0, x, x0, diff, dt);
-  SWAP(x0, x);
+  //diffuse(N, 0, x, x0, diff, dt);
+  //SWAP(x0, x);
 
   cout << "starting advect" << endl;
-  advect(N, 0, x, x0, u, v, dt);
+  //advect(N, 0, x, x0, u, v, dt);
 
   cout << "Done with advect" << endl;
 }
@@ -216,8 +216,8 @@ int main() {
   int cube_bl_y = 150;
   int cube_length = 30;
 
-  float cube_vel_x = 0.00001;
-  float cube_vel_y = 0.00001;
+  float cube_vel_x = 0.0; //0.00001;
+  float cube_vel_y = 0.0; //0.00001;
 
   float dens[size], dens_prev[size];
 
