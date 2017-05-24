@@ -216,8 +216,8 @@ int main() {
   int cube_bl_y = 150;
   int cube_length = 30;
 
-  float cube_vel_x = 0.0;
-  float cube_vel_y = 0.0;
+  float cube_vel_x = 0.00001;
+  float cube_vel_y = 0.00001;
 
   float dens[size], dens_prev[size];
 
