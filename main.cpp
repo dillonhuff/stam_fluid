@@ -237,13 +237,15 @@ int main() {
 	v[IX(i, j)] = cube_vel_y;//random_float(0, 1);
 
       } else {
+
 	dens_prev[IX(i, j)] = 0;
 	dens[IX(i, j)] = 0;
+
 	u_prev[IX(i, j)] = 0;
 	v_prev[IX(i, j)] = 0;
+
 	u[IX(i, j)] = 0;
 	v[IX(i, j)] = 0;
-	
       }
     }
 
@@ -253,7 +255,7 @@ int main() {
   visualize_density(N, dens);
 
   int i = 0;
-  int max = 10;
+  int max = 400;
   while (i < max) {
     vel_step ( N, u, v, u_prev, v_prev, visc, dt );
 
@@ -263,9 +265,13 @@ int main() {
 
     cout << "Did dens step" << endl;
 
-    visualize_density(N, dens);
+    i++;
+
+    cout << "i = " << i << endl;
 
   }
+
+  visualize_density(N, dens);
 
   
 
