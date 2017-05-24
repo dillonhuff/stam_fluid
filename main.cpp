@@ -12,8 +12,27 @@ void add_source(const int N, float* x, float* s, const float dt) {
   
 }
 
-void set_bnd(const int N, const double d, float* x) {
-  
+// Conditions
+// 1 = Setting x bounds, symmetric
+// 2 = Setting y bounds, symmetric
+// 0 = Continuous
+void set_bnd(const int N, const int b, float* x) {
+
+  // Set edges
+  for (int i = 1; i <= N; i++) {
+    x[IX(0, i)] = b == 1 ? -x[IX(1, i)] : x[IX(1, i)];
+    x[IX(N + 1, i)] = b == 1 ? -x[IX(N, i)] : x[IX(N, i)];
+
+    x[IX(i, 0)] = b == 2 ? -x[IX(i, 1)] : x[IX(i, 1)];
+    x[IX(i, N + 1)] = b == 2 ? -x[IX(i, N)] : x[IX(i, N)];
+  }
+
+  // Set corners
+  x[IX(0, 0)] = 0.5*( x[IX(1, 0)] + x[IX(0, 1)] );
+  x[IX(0, N + 1)] = 0.5*( x[IX(0, N)] + x[IX(1, N + 1)] );
+  x[IX(N + 1, 0)] = 0.5*( x[IX(N, 0)] + x[IX(N + 1, 1)] );
+  x[IX(N + 1, N + 1)] = 0.5*( x[IX(N + 1, N)] + x[IX(N, N + 1)] );
+
 }
 
 void diffuse(const int N, const int b, float* x, float* x0, float diff, float dt) {
