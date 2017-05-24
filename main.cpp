@@ -1,6 +1,11 @@
 #include "utils.h"
 #include "visualize.h"
 
+#include <cstdlib>
+#include <iostream>
+
+using namespace std;
+
 void add_source(const int N, float* x, float* s, const float dt) {
   int size = (N+2)*(N+2);
 
@@ -106,9 +111,15 @@ void dens_step(const int N,
   add_source(N, x, x0, dt);
 
   SWAP(x0, x);
+
+  cout << "starting diffuse" << endl;
   diffuse(N, 0, x, x0, diff, dt);
   SWAP(x0, x);
+
+  cout << "starting advect" << endl;
   advect(N, 0, x, x0, u, v, dt);
+
+  cout << "Done with advect" << endl;
 }
 
 void project(const int N,
@@ -182,14 +193,38 @@ void vel_step(const int N,
   
 }
 
+float random_float(float a, float b) {
+    float random = ((float) rand()) / (float) RAND_MAX;
+    float diff = b - a;
+    float r = random * diff;
+    return a + r;
+}
+
 int main() {
   int N = 200;
   int size = (N+2)*(N+2);
-  //int u[size], v[size], u_prev[size], v_prev[size];
-  float dens[size]; //, dens_prev[size];
+  float u[size], v[size], u_prev[size], v_prev[size];
+  double dt = 0.1;
+  double visc = 0.1;
+  double diff = 0.5;
+
+  float dens[size], dens_prev[size];
   for (int i = 0; i < size; i++) {
-    dens[i] = 255;
+    dens_prev[i] = random_float(0, 255);
+    u_prev[i] = random_float(0, 50);
+    v_prev[i] = random_float(0, 75);
+
   }
+
+  cout << "Initialized" << endl;
+  
+  vel_step ( N, u, v, u_prev, v_prev, visc, dt );
+
+  cout << "Did vel step" << endl;
+
+  dens_step ( N, dens, dens_prev, u, v, diff, dt );
+
+  cout << "Did dens step" << endl;
 
   visualize_density(N, dens);
 
