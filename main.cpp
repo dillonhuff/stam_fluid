@@ -46,7 +46,7 @@ void diffuse(const int N, const int b, float* x, float* x0, float diff, float dt
 
     for (int i = 1; i <= N; i++) {
       for (int j = 1; j <= N; j++) {
-	x[IX(i, j)] = (x[IX(i, j)] +
+	x[IX(i, j)] = (x0[IX(i, j)] +
 		       a*(x[IX(i - 1, j)] +
 			  x[IX(i + 1, j)] +
 			  x[IX(i, j - 1)] +
@@ -210,14 +210,14 @@ int main() {
   float u[size], v[size], u_prev[size], v_prev[size];
   double dt = 0.1;
   double visc = 0.00;
-  double diff = 0.00;
+  double diff = 2.00;
 
   int cube_bl_x = 50;
   int cube_bl_y = 150;
   int cube_length = 30;
 
-  float cube_vel_x = 0.00001;
-  float cube_vel_y = 0.00001;
+  float cube_vel_x = 0.0;
+  float cube_vel_y = 0.0;
 
   float dens[size], dens_prev[size];
 
