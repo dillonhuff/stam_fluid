@@ -113,14 +113,14 @@ void dens_step(const int N,
 	       const float dt) {
   //add_source(N, x, x0, dt);
 
-  //SWAP(x0, x);
+  SWAP(x0, x);
 
   cout << "starting diffuse" << endl;
-  //diffuse(N, 0, x, x0, diff, dt);
-  //SWAP(x0, x);
+  diffuse(N, 0, x, x0, diff, dt);
+  SWAP(x0, x);
 
   cout << "starting advect" << endl;
-  //advect(N, 0, x, x0, u, v, dt);
+  advect(N, 0, x, x0, u, v, dt);
 
   cout << "Done with advect" << endl;
 }
