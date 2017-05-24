@@ -127,6 +127,18 @@ void project(const int N,
 
     set_bnd(N, 0, p);
   }
+
+  // Update original quantities
+  for (int i = 1; i <= N; i++) {
+    for (int j = 1; j <= N; j++) {
+      u[IX(i, j)] -= 0.5*(p[IX(i + 1, j)] - p[IX(i - 1, j)]) / h;
+      v[IX(i, j)] -= 0.5*(p[IX(i, j + 1)] - p[IX(i, j - 1)]) / h;
+    }
+  }
+
+  set_bnd(N, 1, u);
+  set_bnd(N, 2, v);
+
 }
 
 void vel_step(const int N,
