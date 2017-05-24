@@ -124,6 +124,8 @@ void project(const int N,
 		       p[IX(i, j + 1)] + p[IX(i, j - 1)]) / 4.0;
       }
     }
+
+    set_bnd(N, 0, p);
   }
 }
 
