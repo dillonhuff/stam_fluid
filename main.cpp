@@ -111,7 +111,7 @@ void dens_step(const int N,
 	       float* x, float* x0, float* u, float* v,
 	       const float diff,
 	       const float dt) {
-  //add_source(N, x, x0, dt);
+  add_source(N, x, x0, dt);
 
   SWAP(x0, x);
 
@@ -227,7 +227,7 @@ int main() {
       if ((cube_bl_x <= i && i <= cube_bl_x + cube_length) &&
 	  (cube_bl_y <= j && j <= cube_bl_y + cube_length)) {
 
-	dens_prev[IX(i, j)] = 255.0; //random_float(0, 255);
+	dens_prev[IX(i, j)] = 0; //255.0; //random_float(0, 255);
 	dens[IX(i, j)] = 255.0; //random_float(0, 255);
 	u_prev[IX(i, j)] = cube_vel_x;//random_float(0, 1);
 	v_prev[IX(i, j)] = cube_vel_y;//-1*u_prev[i];//random_float(0, 1);
