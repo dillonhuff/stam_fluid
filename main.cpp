@@ -216,8 +216,8 @@ int main() {
   int cube_bl_y = 150;
   int cube_length = 30;
 
-  float cube_vel_x = 0.0; //0.00001;
-  float cube_vel_y = 0.0; //0.00001;
+  float cube_vel_x = 0.00001;
+  float cube_vel_y = 0.00001;
 
   float dens[size], dens_prev[size];
 
@@ -229,8 +229,8 @@ int main() {
 
 	dens_prev[IX(i, j)] = 0; //255.0; //random_float(0, 255);
 	dens[IX(i, j)] = 255.0; //random_float(0, 255);
-	u_prev[IX(i, j)] = cube_vel_x;//random_float(0, 1);
-	v_prev[IX(i, j)] = cube_vel_y;//-1*u_prev[i];//random_float(0, 1);
+	u_prev[IX(i, j)] = 0.0; //cube_vel_x;//random_float(0, 1);
+	v_prev[IX(i, j)] = 0.0; //cube_vel_y;//-1*u_prev[i];//random_float(0, 1);
 	u[IX(i, j)] = cube_vel_x;//random_float(0, 1);
 	v[IX(i, j)] = cube_vel_y;//random_float(0, 1);
 
