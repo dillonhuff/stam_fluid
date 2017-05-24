@@ -1,4 +1,3 @@
-
 #define IX(i, j) ((i) + (N+2)*(j))
 
 void add_source(const int N, float* x, float* s, const float dt) {
@@ -18,7 +17,8 @@ void set_bnd(const int N, const double d, float* x) {
 void diffuse(const int N, const int b, float* x, float* x0, float diff, float dt) {
   float a = dt*diff*N*N;
 
-  for (int k = 0; k < 20; k++) {
+  int num_iterations = 20;
+  for (int k = 0; k < num_iterations; k++) {
 
     for (int i = 1; i <= N; i++) {
       for (int j = 1; j <= N; j++) {
@@ -31,6 +31,50 @@ void diffuse(const int N, const int b, float* x, float* x0, float diff, float dt
     }
 
     set_bnd(N, b, x);
+  }
+}
+
+void advect(const int N, const int b,
+	    float* d,
+	    float* d0,
+	    float* u, // X velocities?
+	    float* v, // Y velocities?
+	    const float dt) {
+  float dt0 = dt*N;
+
+  for (int i = 1; i <= N; i++) {
+    for (int j = 1; j <= N; j++) {
+      float x = i - dt0*u[IX(i, j)];
+      float y = j - dt0*v[IX(i, j)];
+
+      if (x < 0.5) {
+	x = 0.5;
+      }
+      if (x > N + 0.5) {
+	x = N + 0.5;
+      }
+
+      int i0 = (int) x;
+      int i1 = i0 + 1;
+
+      if (y < 0.5) {
+	y = 0.5;
+      }
+      if (y > N + 0.5) {
+	y = N + 0.5;
+      }
+
+      int j0 = (int) y;
+      int j1 = i0 + 1;
+
+      int s1 = x - i0;
+      int s0 = 1 - s1;
+      int t1 = y - j0;
+      int t0 = 1 - t1;
+
+      d[IX(i, j)] = s0*(t0*d0[IX(i0, j0)] + t1*d0[IX(i0, j1)]) +
+	s1*(t0*d0[IX(i1, j0)] + t1*d0[IX(i1, j1)]);
+    }
   }
 }
 
