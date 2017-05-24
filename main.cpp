@@ -216,8 +216,8 @@ int main() {
   int cube_bl_y = 150;
   int cube_length = 30;
 
-  float cube_vel_x = -0.1;
-  float cube_vel_y = -0.1;
+  float cube_vel_x = 0.0;
+  float cube_vel_y = 0.0;
 
   float dens[size], dens_prev[size];
 
@@ -227,7 +227,6 @@ int main() {
       if ((cube_bl_x <= i && i <= cube_bl_x + cube_length) &&
 	  (cube_bl_y <= j && j <= cube_bl_y + cube_length)) {
 
-	cout << "occupied!" << endl;
 	dens_prev[IX(i, j)] = 255.0; //random_float(0, 255);
 	dens[IX(i, j)] = 255.0; //random_float(0, 255);
 	u_prev[IX(i, j)] = cube_vel_x;//random_float(0, 1);
