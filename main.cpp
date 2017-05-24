@@ -185,13 +185,13 @@ void vel_step(const int N,
   
 }
 
-int main() {
-  // int N = 5;
-  // int size = (N+2)*(N+2);
-  // int u[size], v[size], u_prev[size], v_prev[size];
-  // int dens[size], dens_prev[size];
+// int main() {
+//   // int N = 5;
+//   // int size = (N+2)*(N+2);
+//   // int u[size], v[size], u_prev[size], v_prev[size];
+//   // int dens[size], dens_prev[size];
 
   
 
-  return 0;
-}
+//   return 0;
+// }
