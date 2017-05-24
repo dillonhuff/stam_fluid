@@ -103,7 +103,7 @@ void visualize_density(const int N, float* densities) {
  
   vtkSmartPointer<vtkActor2D> imageActor = vtkSmartPointer<vtkActor2D>::New();
   imageActor->SetMapper(imageMapper);
-  imageActor->SetPosition(20, 20);
+  imageActor->SetPosition(0, 0);
  
   // Setup renderers
   vtkSmartPointer<vtkRenderer> renderer =
@@ -129,7 +129,11 @@ void visualize_density(const int N, float* densities) {
  
   //renderer->AddViewProp(imageActor);
   renderer->AddActor2D(imageActor);
- 
+
+  int imageSize[3];
+  colorImage->GetDimensions(imageSize);
+  renderWindow->SetSize(imageSize[0], imageSize[1]);
+
   renderWindow->Render();
   renderWindowInteractor->Start();
  

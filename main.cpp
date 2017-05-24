@@ -183,12 +183,12 @@ void vel_step(const int N,
 }
 
 int main() {
-  int N = 20;
+  int N = 200;
   int size = (N+2)*(N+2);
   //int u[size], v[size], u_prev[size], v_prev[size];
   float dens[size]; //, dens_prev[size];
   for (int i = 0; i < size; i++) {
-    dens[i] = 155;
+    dens[i] = 255;
   }
 
   visualize_density(N, dens);
