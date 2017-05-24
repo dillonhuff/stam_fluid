@@ -1,4 +1,6 @@
 #define IX(i, j) ((i) + (N+2)*(j))
+// Replace with std::swap?
+#define SWAP(x, x0) {float* tmp = x; x0 = x; x = tmp;}
 
 void add_source(const int N, float* x, float* s, const float dt) {
   int size = (N+2)*(N+2);
@@ -76,6 +78,20 @@ void advect(const int N, const int b,
 	s1*(t0*d0[IX(i1, j0)] + t1*d0[IX(i1, j1)]);
     }
   }
+
+  set_bnd(N, b, d);
+}
+
+void dens_step( const int N,
+		float* x, float* x0, float* u, float* v,
+		const float diff,
+		const float dt) {
+  add_source(N, x, x0, dt);
+
+  SWAP(x0, x);
+  diffuse(N, 0, x, x0, diff, dt);
+  SWAP(x0, x);
+  advect(N, 0, x, x0, u, v, dt);
 }
 
 int main() {
