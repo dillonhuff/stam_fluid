@@ -82,16 +82,47 @@ void advect(const int N, const int b,
   set_bnd(N, b, d);
 }
 
-void dens_step( const int N,
-		float* x, float* x0, float* u, float* v,
-		const float diff,
-		const float dt) {
+void dens_step(const int N,
+	       float* x, float* x0, float* u, float* v,
+	       const float diff,
+	       const float dt) {
   add_source(N, x, x0, dt);
 
   SWAP(x0, x);
   diffuse(N, 0, x, x0, diff, dt);
   SWAP(x0, x);
   advect(N, 0, x, x0, u, v, dt);
+}
+
+void project(const int N,
+	     float* u,
+	     float* v,
+	     float* u0,
+	     float* v0) {
+}
+
+void vel_step(const int N,
+	      float* u, float* v, float* u0, float* v0,
+	      const float visc, const float dt) {
+  add_source(N, u, u0, dt);
+  add_source(N, v, v0, dt);
+
+  SWAP(u0, u);
+  diffuse(N, 1, u, u0, visc, dt);
+  SWAP(v0, v);
+  diffuse(N, 2, v, v0, visc, dt);
+
+  project(N, u, v, u0, v0);
+
+  SWAP(u0, u);
+  SWAP(v0, v);
+
+  // Advection of velocity?
+  advect(N, 1, u, u0, u0, v0, dt);
+  advect(N, 2, v, v0, v0, v0, dt);
+
+  project(N, u, v, u0, v0);
+  
 }
 
 int main() {
