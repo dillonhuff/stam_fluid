@@ -101,7 +101,10 @@ void advect(const int N, const int b,
     }
   }
 
+  cout << "Set entries" << endl;
   set_bnd(N, b, d);
+
+  cout << "Done setting bounds" << endl;
 }
 
 void dens_step(const int N,
@@ -203,30 +206,42 @@ float random_float(float a, float b) {
 int main() {
   int N = 200;
   int size = (N+2)*(N+2);
+
   float u[size], v[size], u_prev[size], v_prev[size];
   double dt = 0.1;
-  double visc = 0.1;
-  double diff = 0.5;
+  double visc = 0.01;
+  double diff = 0.05;
 
   float dens[size], dens_prev[size];
   for (int i = 0; i < size; i++) {
     dens_prev[i] = random_float(0, 255);
-    u_prev[i] = random_float(0, 50);
-    v_prev[i] = random_float(0, 75);
+    dens[i] = random_float(0, 255);
+    u_prev[i] = random_float(0, 1);
+    v_prev[i] = random_float(0, 1);
+    u[i] = random_float(0, 1);
+    v[i] = random_float(0, 1);
 
   }
 
   cout << "Initialized" << endl;
-  
-  vel_step ( N, u, v, u_prev, v_prev, visc, dt );
-
-  cout << "Did vel step" << endl;
-
-  dens_step ( N, dens, dens_prev, u, v, diff, dt );
-
-  cout << "Did dens step" << endl;
-
   visualize_density(N, dens);
+
+  int i = 0;
+  int max = 10;
+  while (i < max) {
+    vel_step ( N, u, v, u_prev, v_prev, visc, dt );
+
+    cout << "Did vel step" << endl;
+
+    dens_step ( N, dens, dens_prev, u, v, diff, dt );
+
+    cout << "Did dens step" << endl;
+
+    visualize_density(N, dens);
+
+  }
+
+  
 
   return 0;
 }
