@@ -1,8 +1,5 @@
+#include "utils.h"
 #include "visualize.h"
-
-#define IX(i, j) ((i) + (N+2)*(j))
-// Replace with std::swap?
-#define SWAP(x, x0) {float* tmp = x; x0 = x; x = tmp;}
 
 void add_source(const int N, float* x, float* s, const float dt) {
   int size = (N+2)*(N+2);
@@ -185,13 +182,13 @@ void vel_step(const int N,
   
 }
 
-// int main() {
-//   // int N = 5;
-//   // int size = (N+2)*(N+2);
-//   // int u[size], v[size], u_prev[size], v_prev[size];
-//   // int dens[size], dens_prev[size];
+int main() {
+  int N = 20;
+  int size = (N+2)*(N+2);
+  //int u[size], v[size], u_prev[size], v_prev[size];
+  float dens[size]; //, dens_prev[size];
 
-  
+  visualize_density(N, dens);
 
-//   return 0;
-// }
+  return 0;
+}
