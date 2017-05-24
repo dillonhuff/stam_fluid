@@ -89,7 +89,7 @@ void advect(const int N, const int b,
       }
 
       int j0 = (int) y;
-      int j1 = i0 + 1;
+      int j1 = j0 + 1;
 
       int s1 = x - i0;
       int s0 = 1 - s1;
