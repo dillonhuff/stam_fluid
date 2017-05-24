@@ -210,7 +210,7 @@ int main() {
   float u[size], v[size], u_prev[size], v_prev[size];
   double dt = 0.1;
   double visc = 0.00;
-  double diff = 2.00;
+  double diff = 2000.00;
 
   int cube_bl_x = 50;
   int cube_bl_y = 150;
@@ -227,7 +227,7 @@ int main() {
       if ((cube_bl_x <= i && i <= cube_bl_x + cube_length) &&
 	  (cube_bl_y <= j && j <= cube_bl_y + cube_length)) {
 
-	dens_prev[IX(i, j)] = 0; //255.0; //random_float(0, 255);
+	dens_prev[IX(i, j)] = 255.0; //255.0; //random_float(0, 255);
 	dens[IX(i, j)] = 255.0; //random_float(0, 255);
 	u_prev[IX(i, j)] = 0.0; //cube_vel_x;//random_float(0, 1);
 	v_prev[IX(i, j)] = 0.0; //cube_vel_y;//-1*u_prev[i];//random_float(0, 1);
