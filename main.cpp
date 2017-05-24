@@ -97,8 +97,34 @@ void dens_step(const int N,
 void project(const int N,
 	     float* u,
 	     float* v,
-	     float* u0,
-	     float* v0) {
+	     float* p,
+	     float* div) {
+
+  float h = 1.0 / N;
+
+  // Set the divergence
+  for (int i = 1; i <= N; i++) {
+    for (int j = 1; j <= N; j++) {
+      div[IX(i, j)] = -0.5*h*(u[IX(i + 1, j)] - u[IX(i - 1, j)] +
+			      v[IX(i, j+1)] - v[IX(i, j - 1)]);
+      p[IX(i, j)] = 0;
+    }
+  }
+
+  set_bnd(N, 0, div);
+  set_bnd(N, 0, p);
+
+  
+  // Solve for pressure
+  for (int k = 0; k < 20; k++) {
+
+    for (int i = 1; i <= N; i++) {
+      for (int j = 1; j <= N; j++) {
+	p[IX(i, j)] = (div[IX(i, j)] + p[IX(i - 1, j)] + p[IX(i + 1, j)] +
+		       p[IX(i, j + 1)] + p[IX(i, j - 1)]) / 4.0;
+      }
+    }
+  }
 }
 
 void vel_step(const int N,
