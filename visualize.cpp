@@ -14,63 +14,49 @@
 #include <vtkImageSlice.h>
 
 static void CreateColorImage(const int, vtkImageData*, float*);
- 
-// int main(int, char *[]) {
-//   vtkSmartPointer<vtkImageData> colorImage = vtkSmartPointer<vtkImageData>::New();
-//   CreateColorImage(colorImage);
- 
-//   vtkSmartPointer<vtkImageMapper> imageMapper = vtkSmartPointer<vtkImageMapper>::New();
-// #if VTK_MAJOR_VERSION <= 5
-//   imageMapper->SetInputConnection(colorImage->GetProducerPort());
-// #else
-//   imageMapper->SetInputData(colorImage);
-// #endif
-//   imageMapper->SetColorWindow(255);
-//   imageMapper->SetColorLevel(127.5);
- 
-//   vtkSmartPointer<vtkActor2D> imageActor = vtkSmartPointer<vtkActor2D>::New();
-//   imageActor->SetMapper(imageMapper);
-//   imageActor->SetPosition(20, 20);
- 
-//   // Setup renderers
-//   vtkSmartPointer<vtkRenderer> renderer = vtkSmartPointer<vtkRenderer>::New();
- 
-//   // Setup render window
-//   vtkSmartPointer<vtkRenderWindow> renderWindow = vtkSmartPointer<vtkRenderWindow>::New();
- 
-//   renderWindow->AddRenderer(renderer);
- 
-//   // Setup render window interactor
-//   vtkSmartPointer<vtkRenderWindowInteractor> renderWindowInteractor = vtkSmartPointer<vtkRenderWindowInteractor>::New();
- 
-//   vtkSmartPointer<vtkInteractorStyleImage> style = vtkSmartPointer<vtkInteractorStyleImage>::New();
- 
-//   renderWindowInteractor->SetInteractorStyle(style);
- 
-//   // Render and start interaction
-//   renderWindowInteractor->SetRenderWindow(renderWindow);
- 
-//   //renderer->AddViewProp(imageActor);
-//   renderer->AddActor2D(imageActor);
- 
-//   renderWindow->Render();
-//   renderWindowInteractor->Start();
- 
-//   return EXIT_SUCCESS;
-// }
- 
+
+using namespace std;
+
+float array_min(const int N, float* densities) {
+  auto min_elem = min_element(densities, densities + (N+2)*(N+2));
+  return *min_elem;
+}
+
+float array_max(const int N, float* densities) {
+  auto max_elem = max_element(densities, densities + (N+2)*(N+2));
+  return *max_elem;
+}
+
+float scale_range(const double min_in,
+		  const double max_in,
+		  const double v) {
+  const double b = 255*min_in / (max_in - min_in); //255 / (max_in - min_in); //255*( 1 / ( -max_in/(min_in) + 1 ) );
+  const double a = 255 / (max_in - min_in);
+
+  return static_cast<int>(a*v + b);
+}
+
 void CreateColorImage(const int N, vtkImageData* image, float* densities) {
+  float max_density = array_max(N, densities);
+  float min_density = array_min(N, densities);
+
+  cout << "max = " << max_density << endl;
+  cout << "min = " << min_density << endl;
+
   unsigned int dim = N;
  
   image->SetDimensions(dim, dim, 1);
   image->AllocateScalars(VTK_UNSIGNED_CHAR,3);
+
+  cout << scale_range(min_density, max_density, min_density) << endl;
+  cout << scale_range(min_density, max_density, max_density) << endl;
 
   for(unsigned int x = 0; x < dim; x++) {
     for(unsigned int y = 0; y < dim; y++) {
 	unsigned char* pixel =
 	  static_cast<unsigned char*>(image->GetScalarPointer(x,y,0));
 	pixel[0] = 0;
-	pixel[1] = densities[IX(x, y)];
+	pixel[1] = scale_range(min_density, max_density, densities[IX(x, y)]);
 	pixel[2] = 0;
 	// if(x < dim/2)
 	// 	{
