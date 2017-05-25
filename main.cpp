@@ -230,8 +230,8 @@ int main() {
   int cube_bl_y = 150;
   int cube_length = 30;
 
-  float cube_vel_x = 0.05;
-  float cube_vel_y = 0.05;
+  float cube_vel_x = 0.005;
+  float cube_vel_y = 0.005;
 
   float dens[size], dens_prev[size];
 
@@ -272,6 +272,9 @@ int main() {
   int max = 3;
   while (i < max) {
     vel_step ( N, u, v, u_prev, v_prev, visc, dt );
+
+    visualize_density(N, u);
+    visualize_density(N, v);
 
     cout << "Did vel step" << endl;
 
