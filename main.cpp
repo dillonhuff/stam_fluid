@@ -265,6 +265,10 @@ int main() {
 
   }
 
+  set_bnd(N, 0, dens);
+  set_bnd(N, 1, u);
+  set_bnd(N, 2, v);
+
   cout << "Initialized density" << endl;
   visualize_density(N, dens);
 
