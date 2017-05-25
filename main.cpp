@@ -1,6 +1,7 @@
 #include "utils.h"
 #include "visualize.h"
 
+#include <cassert>
 #include <cstdlib>
 #include <iostream>
 
@@ -95,6 +96,22 @@ void advect(const int N, const int b,
       int s0 = 1 - s1;
       int t1 = y - j0;
       int t0 = 1 - t1;
+
+      if (i0 < 0) {
+	cout << "X = " << x << endl;
+	cout << "dt0 = " << dt0 << endl;
+	cout << "u[IX(i, j)] = " << u[IX(i, j)] << endl;
+	cout << "dt0*u[IX(i, j)] = " << dt0*u[IX(i, j)] << endl;
+	cout << "i = " << i << endl;
+	cout << "j = " << j << endl;
+      }
+
+      assert(i0 >= 0);
+      assert(j0 >= 0);
+      
+
+      // cout << "i0 = " << i0 << endl;
+      // cout << "j0 = " << j0 << endl;
 
       double s0t0 = s0*t0*d0[IX(i0, j0)];
       double s0t1 = s0*t1*d0[IX(i0, j1)];
@@ -194,7 +211,9 @@ void vel_step(const int N,
   SWAP(v0, v);
 
   // Advection of velocity?
+  cout << "Advect 1" << endl;
   advect(N, 1, u, u0, u0, v0, dt);
+  cout << "Advect 2" << endl;
   advect(N, 2, v, v0, u0, v0, dt);
 
   project(N, u, v, u0, v0);
@@ -235,8 +254,8 @@ int main() {
   int cube_bl_y = 150;
   int cube_length = 30;
 
-  float cube_vel_x = 1.0;
-  float cube_vel_y = 1.0;
+  float cube_vel_x = 0.5;
+  float cube_vel_y = 0.5;
 
   float dens[size], dens_prev[size];
 
