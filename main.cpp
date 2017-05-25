@@ -262,28 +262,34 @@ int main() {
   for (int i = 1; i <= N; i++) {
     for (int j = 1; j <= N; j++) {
 
+      u_prev[IX(i, j)] = 0.0; //cube_vel_x / 2.0; //cube_vel_x;//random_float(0, 1);
+      v_prev[IX(i, j)] = 0.0; //-1*cube_vel_y / 2.0; //cube_vel_y;//-1*u_prev[i];//random_float(0, 1);
+
+      u[IX(i, j)] = cube_vel_x;//random_float(0, 1);
+      v[IX(i, j)] = -1*cube_vel_y;//random_float(0, 1);
+      
       if ((cube_bl_x <= i && i <= cube_bl_x + cube_length) &&
 	  (cube_bl_y <= j && j <= cube_bl_y + cube_length)) {
 
 	dens_prev[IX(i, j)] = 255.0; //255.0; //random_float(0, 255);
 	dens[IX(i, j)] = 255.0; //random_float(0, 255);
 
-	u_prev[IX(i, j)] = cube_vel_x; //cube_vel_x;//random_float(0, 1);
-	v_prev[IX(i, j)] = -1*cube_vel_y; //cube_vel_y;//-1*u_prev[i];//random_float(0, 1);
+	// u_prev[IX(i, j)] = cube_vel_x / 2.0; //cube_vel_x;//random_float(0, 1);
+	// v_prev[IX(i, j)] = -1*cube_vel_y / 2.0; //cube_vel_y;//-1*u_prev[i];//random_float(0, 1);
 
-	u[IX(i, j)] = cube_vel_x;//random_float(0, 1);
-	v[IX(i, j)] = -1*cube_vel_y;//random_float(0, 1);
+	// u[IX(i, j)] = cube_vel_x;//random_float(0, 1);
+	// v[IX(i, j)] = -1*cube_vel_y;//random_float(0, 1);
 
       } else {
 
 	dens_prev[IX(i, j)] = 0;
 	dens[IX(i, j)] = 0;
 
-	u_prev[IX(i, j)] = 0;
-	v_prev[IX(i, j)] = 0;
+	// u_prev[IX(i, j)] = 0;
+	// v_prev[IX(i, j)] = 0;
 
-	u[IX(i, j)] = 0;
-	v[IX(i, j)] = 0;
+	// u[IX(i, j)] = 0;
+	// v[IX(i, j)] = 0;
       }
     }
 
