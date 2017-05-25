@@ -96,8 +96,13 @@ void advect(const int N, const int b,
       int t1 = y - j0;
       int t0 = 1 - t1;
 
-      d[IX(i, j)] = s0*(t0*d0[IX(i0, j0)] + t1*d0[IX(i0, j1)]) +
-	s1*(t0*d0[IX(i1, j0)] + t1*d0[IX(i1, j1)]);
+      double s0t0 = s0*t0*d0[IX(i0, j0)];
+      double s0t1 = s0*t1*d0[IX(i0, j1)];
+      double s1t0 = s1*t0*d0[IX(i1, j0)];
+      double s1t1 = s1*t1*d0[IX(i1, j1)];
+      d[IX(i, j)] = s0t0 + s0t1 + s1t0 + s1t1;
+      // d[IX(i, j)] = s0*(t0*d0[IX(i0, j0)] + t1*d0[IX(i0, j1)]) +
+      // 	s1*(t0*d0[IX(i1, j0)] + t1*d0[IX(i1, j1)]);
     }
   }
 
@@ -230,8 +235,8 @@ int main() {
   int cube_bl_y = 150;
   int cube_length = 30;
 
-  float cube_vel_x = 10000.0;
-  float cube_vel_y = 10000.0;
+  float cube_vel_x = 1.0;
+  float cube_vel_y = 1.0;
 
   float dens[size], dens_prev[size];
 
@@ -244,11 +249,11 @@ int main() {
 	dens_prev[IX(i, j)] = 255.0; //255.0; //random_float(0, 255);
 	dens[IX(i, j)] = 255.0; //random_float(0, 255);
 
-	u_prev[IX(i, j)] = 0; //cube_vel_x;//random_float(0, 1);
-	v_prev[IX(i, j)] = 0; //cube_vel_y;//-1*u_prev[i];//random_float(0, 1);
+	u_prev[IX(i, j)] = cube_vel_x; //cube_vel_x;//random_float(0, 1);
+	v_prev[IX(i, j)] = -1*cube_vel_y; //cube_vel_y;//-1*u_prev[i];//random_float(0, 1);
 
 	u[IX(i, j)] = cube_vel_x;//random_float(0, 1);
-	v[IX(i, j)] = cube_vel_y;//random_float(0, 1);
+	v[IX(i, j)] = -1*cube_vel_y;//random_float(0, 1);
 
       } else {
 
