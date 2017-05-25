@@ -224,14 +224,14 @@ int main() {
   float u[size], v[size], u_prev[size], v_prev[size];
   double dt = 0.1;
   double visc = 0.00;
-  double diff = 0.00;
+  double diff = 10000.00;
 
   int cube_bl_x = 50;
   int cube_bl_y = 150;
   int cube_length = 30;
 
-  float cube_vel_x = 0.005;
-  float cube_vel_y = 0.005;
+  float cube_vel_x = 1000.0;
+  float cube_vel_y = 1000.0;
 
   float dens[size], dens_prev[size];
 
@@ -244,8 +244,8 @@ int main() {
 	dens_prev[IX(i, j)] = 255.0; //255.0; //random_float(0, 255);
 	dens[IX(i, j)] = 255.0; //random_float(0, 255);
 
-	u_prev[IX(i, j)] = 0.0; //cube_vel_x;//random_float(0, 1);
-	v_prev[IX(i, j)] = 0.0; //cube_vel_y;//-1*u_prev[i];//random_float(0, 1);
+	u_prev[IX(i, j)] = 0; //cube_vel_x;//random_float(0, 1);
+	v_prev[IX(i, j)] = 0; //cube_vel_y;//-1*u_prev[i];//random_float(0, 1);
 
 	u[IX(i, j)] = cube_vel_x;//random_float(0, 1);
 	v[IX(i, j)] = cube_vel_y;//random_float(0, 1);
@@ -265,6 +265,10 @@ int main() {
 
   }
 
+  set_bnd(N, 0, dens_prev);
+  set_bnd(N, 1, u_prev);
+  set_bnd(N, 2, v_prev);
+  
   set_bnd(N, 0, dens);
   set_bnd(N, 1, u);
   set_bnd(N, 2, v);
@@ -279,12 +283,12 @@ int main() {
   visualize_density(N, v);
   
   int i = 0;
-  int max = 3;
+  int max = 100;
   while (i < max) {
     vel_step ( N, u, v, u_prev, v_prev, visc, dt );
 
-    visualize_density(N, u);
-    visualize_density(N, v);
+    // visualize_density(N, u);
+    // visualize_density(N, v);
 
     cout << "Did vel step" << endl;
 
