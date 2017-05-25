@@ -190,7 +190,7 @@ void vel_step(const int N,
 
   // Advection of velocity?
   advect(N, 1, u, u0, u0, v0, dt);
-  advect(N, 2, v, v0, v0, v0, dt);
+  advect(N, 2, v, v0, u0, v0, dt);
 
   project(N, u, v, u0, v0);
   
@@ -224,14 +224,14 @@ int main() {
   float u[size], v[size], u_prev[size], v_prev[size];
   double dt = 0.1;
   double visc = 0.00;
-  double diff = 10000.00;
+  double diff = 0.0; //10000.00;
 
   int cube_bl_x = 50;
   int cube_bl_y = 150;
   int cube_length = 30;
 
-  float cube_vel_x = 1000.0;
-  float cube_vel_y = 1000.0;
+  float cube_vel_x = 10000.0;
+  float cube_vel_y = 10000.0;
 
   float dens[size], dens_prev[size];
 
