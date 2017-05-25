@@ -265,9 +265,15 @@ int main() {
 
   }
 
-  cout << "Initialized" << endl;
+  cout << "Initialized density" << endl;
   visualize_density(N, dens);
 
+  cout << "Initialized u" << endl;
+  visualize_density(N, u);
+
+  cout << "Initialized v" << endl;
+  visualize_density(N, v);
+  
   int i = 0;
   int max = 3;
   while (i < max) {
