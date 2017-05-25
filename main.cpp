@@ -248,14 +248,14 @@ int main() {
   float u[size], v[size], u_prev[size], v_prev[size];
   double dt = 0.1;
   double visc = 0.00;
-  double diff = 0.0; //10000.00;
+  double diff = 10000.00;
 
   int cube_bl_x = 50;
   int cube_bl_y = 150;
   int cube_length = 30;
 
-  float cube_vel_x = 0.5;
-  float cube_vel_y = 0.5;
+  float cube_vel_x = 0.01;
+  float cube_vel_y = 0.01;
 
   float dens[size], dens_prev[size];
 
@@ -313,7 +313,7 @@ int main() {
   visualize_density(N, v);
   
   int i = 0;
-  int max = 100;
+  int max = 10;
   while (i < max) {
     vel_step ( N, u, v, u_prev, v_prev, visc, dt );
 

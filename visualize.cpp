@@ -56,7 +56,8 @@ void CreateColorImage(const int N, vtkImageData* image, float* densities) {
 	unsigned char* pixel =
 	  static_cast<unsigned char*>(image->GetScalarPointer(x,y,0));
 	pixel[0] = 0;
-	pixel[1] = scale_range(min_density, max_density, densities[IX(x, y)]);
+	pixel[1] = (fabs(densities[IX(x, y)]) > 0.0001) ? 255 : 0;
+	  //scale_range(min_density, max_density, densities[IX(x, y)]);
 	pixel[2] = 0;
 	// if(x < dim/2)
 	// 	{
