@@ -203,6 +203,20 @@ float random_float(float a, float b) {
     return a + r;
 }
 
+void read_values(const int N, float* dens, float* u, float* v) {
+  for (int i = 1; i <= N; i++) {
+    for (int j = 1; j <= N; j++) {
+
+      dens[IX(i, j)] = 0;
+
+      u[IX(i, j)] = 0;
+      v[IX(i, j)] = 0;
+    }
+
+  }
+  
+}
+
 int main() {
   int N = 200;
   int size = (N+2)*(N+2);
@@ -216,8 +230,8 @@ int main() {
   int cube_bl_y = 150;
   int cube_length = 30;
 
-  float cube_vel_x = 0.0;
-  float cube_vel_y = 0.0;
+  float cube_vel_x = 0.1;
+  float cube_vel_y = 0.1;
 
   float dens[size], dens_prev[size];
 
@@ -263,11 +277,15 @@ int main() {
 
     dens_step ( N, dens, dens_prev, u, v, diff, dt );
 
+    //read_values( N, dens_prev, u_prev, v_prev );
+
     cout << "Did dens step" << endl;
 
     i++;
 
     cout << "i = " << i << endl;
+
+    //visualize_density(N, dens);
 
   }
 
