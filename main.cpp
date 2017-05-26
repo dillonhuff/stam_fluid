@@ -2,6 +2,7 @@
 #include "visualize.h"
 
 #include <cassert>
+#include <cmath>
 #include <cstdlib>
 #include <iostream>
 
@@ -118,6 +119,21 @@ void advect(const int N, const int b,
       double s1t0 = s1*t0*d0[IX(i1, j0)];
       double s1t1 = s1*t1*d0[IX(i1, j1)];
       d[IX(i, j)] = s0t0 + s0t1 + s1t0 + s1t1;
+
+      if (isnan(d[IX(i, j)])) {
+	cout << "s0 = " << s0 << endl;
+	cout << "t0 = " << t0 << endl;
+	cout << "s1 = " << s1 << endl;
+	cout << "t1 = " << t1 << endl;
+	cout << "( " << i << ", " << j << " )" << endl;
+	cout << "s0t0 = " << s0t0 << endl;
+	cout << "s0t1 = " << s0t1 << endl;
+	cout << "s1t0 = " << s1t0 << endl;
+	cout << "s1t1 = " << s1t1 << endl;
+	cout << "d[i, j] = " << d[IX(i, j)] << endl;
+	assert(!isnan(d[IX(i, j)]));
+      }
+      
       // d[IX(i, j)] = s0*(t0*d0[IX(i0, j0)] + t1*d0[IX(i0, j1)]) +
       // 	s1*(t0*d0[IX(i1, j0)] + t1*d0[IX(i1, j1)]);
     }
@@ -320,13 +336,13 @@ int main() {
   set_bnd(N, 2, v);
 
   cout << "Initialized density" << endl;
-  visualize_density(N, dens);
+  //visualize_density(N, dens);
 
   cout << "Initialized u" << endl;
-  visualize_density(N, u);
+  //visualize_density(N, u);
 
   cout << "Initialized v" << endl;
-  visualize_density(N, v);
+  //visualize_density(N, v);
   
   int i = 0;
   int max = 10;
@@ -352,7 +368,7 @@ int main() {
 
   }
 
-  visualize_density(N, dens);
+  //visualize_density(N, dens);
 
   
 
