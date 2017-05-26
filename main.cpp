@@ -221,10 +221,12 @@ void vel_step(const int N,
   cout << "Advect 1" << endl;
   advect(N, 1, u, u0, u0, v0, dt);
 
+  cout << "Done with advect 1" << endl;
+
   check_nans(N, u);
   //check_nans(N, v);
 
-  check_nans(N, u0);
+  //check_nans(N, u0);
   //check_nans(N, v0);
 
   cout << "Advect 2" << endl;
