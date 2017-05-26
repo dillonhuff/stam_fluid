@@ -4,3 +4,4 @@
 // Replace with std::swap?
 #define SWAP(x, x0) {float* tmp = x; x0 = x; x = tmp;}
 
+void check_nans(const int N, float* x);
