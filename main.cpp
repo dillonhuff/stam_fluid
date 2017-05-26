@@ -200,6 +200,7 @@ void vel_step(const int N,
   add_source(N, u, u0, dt);
   add_source(N, v, v0, dt);
 
+
   SWAP(u0, u);
   diffuse(N, 1, u, u0, visc, dt);
   SWAP(v0, v);
@@ -210,9 +211,22 @@ void vel_step(const int N,
   SWAP(u0, u);
   SWAP(v0, v);
 
+  check_nans(N, u);
+  check_nans(N, v);
+
+  check_nans(N, u0);
+  check_nans(N, v0);
+  
   // Advection of velocity?
   cout << "Advect 1" << endl;
   advect(N, 1, u, u0, u0, v0, dt);
+
+  check_nans(N, u);
+  //check_nans(N, v);
+
+  check_nans(N, u0);
+  //check_nans(N, v0);
+
   cout << "Advect 2" << endl;
   advect(N, 2, v, v0, u0, v0, dt);
 
