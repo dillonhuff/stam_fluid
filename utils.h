@@ -7,3 +7,7 @@
 #include <string>
 
 void check_nans(const int N, float* x, const std::string& s);
+
+float array_min(const int N, float* densities);
+
+float array_max(const int N, float* densities);

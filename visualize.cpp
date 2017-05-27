@@ -17,16 +17,6 @@ static void CreateColorImage(const int, vtkImageData*, float*);
 
 using namespace std;
 
-float array_min(const int N, float* densities) {
-  auto min_elem = min_element(densities, densities + (N+2)*(N+2));
-  return *min_elem;
-}
-
-float array_max(const int N, float* densities) {
-  auto max_elem = max_element(densities, densities + (N+2)*(N+2));
-  return *max_elem;
-}
-
 float scale_range(const double min_in,
 		  const double max_in,
 		  const double v) {

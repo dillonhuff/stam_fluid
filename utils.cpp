@@ -23,3 +23,14 @@ void check_nans(const int N, float* x, const std::string& s) {
     }
   }
 }
+
+float array_min(const int N, float* densities) {
+  auto min_elem = min_element(densities, densities + (N+2)*(N+2));
+  return *min_elem;
+}
+
+float array_max(const int N, float* densities) {
+  auto max_elem = max_element(densities, densities + (N+2)*(N+2));
+  return *max_elem;
+}
+

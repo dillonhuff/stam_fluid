@@ -190,7 +190,10 @@ void project(const int N,
   set_bnd(N, 0, div);
   set_bnd(N, 0, p);
 
-  
+
+  cout << "max div = " << array_max(N, div) << endl;
+  cout << "min div = " << array_min(N, div) << endl;
+
   // Solve for pressure
   for (int k = 0; k < 20; k++) {
 
@@ -206,6 +209,8 @@ void project(const int N,
 
   check_nans(N, p, "p in project before u, v set");
   check_nans(N, div, "div in project before u, v, set");
+
+  cout << "h = " << h << endl;
   
   // Update original quantities
   for (int i = 1; i <= N; i++) {
@@ -320,25 +325,28 @@ int main() {
   float u[size], v[size], u_prev[size], v_prev[size];
   double dt = 0.1;
   double visc = 0.00;
-  double diff = 10000.00;
+  double diff = 100.00;
 
   int cube_bl_x = 50;
   int cube_bl_y = 150;
   int cube_length = 30;
 
-  float cube_vel_x = 0.01;
-  float cube_vel_y = 0.01;
+  float cube_vel_x = 0.1;
+  float cube_vel_y = 0.1;
 
   float dens[size], dens_prev[size];
 
   for (int i = 1; i <= N; i++) {
     for (int j = 1; j <= N; j++) {
 
-      u_prev[IX(i, j)] = 0.0; //cube_vel_x / 1000000; //cube_vel_x;//random_float(0, 1);
-      v_prev[IX(i, j)] = 0.0; //-1*cube_vel_y / 1000000; //cube_vel_y;//-1*u_prev[i];//random_float(0, 1);
+      // u_prev[IX(i, j)] = cube_vel_x; //cube_vel_x;//random_float(0, 1);
+      // v_prev[IX(i, j)] = -1*cube_vel_y; //cube_vel_y;//-1*u_prev[i];//random_float(0, 
+      //      1);
 
-      u[IX(i, j)] = cube_vel_x;//random_float(0, 1);
-      v[IX(i, j)] = -1*cube_vel_y;//random_float(0, 1);
+      u_prev[IX(i, j)] = cube_vel_x + random_float(0, cube_vel_x / 3.0);//random_float(0, 1);
+      v_prev[IX(i, j)] = -1*cube_vel_y + random_float(0, cube_vel_y / 3.0);//random_float(0      
+      u[IX(i, j)] = cube_vel_x + random_float(0, cube_vel_x / 3.0);//random_float(0, 1);
+      v[IX(i, j)] = -1*cube_vel_y + random_float(0, cube_vel_y / 3.0);//random_float(0, 1);
       
       if ((cube_bl_x <= i && i <= cube_bl_x + cube_length) &&
 	  (cube_bl_y <= j && j <= cube_bl_y + cube_length)) {
