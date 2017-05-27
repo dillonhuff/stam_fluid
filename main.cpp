@@ -68,6 +68,8 @@ void advect(const int N, const int b,
 	    const float dt) {
   float dt0 = dt*N;
 
+  check_nans(N, d0, "d0");
+
   for (int i = 1; i <= N; i++) {
     for (int j = 1; j <= N; j++) {
       float x = i - dt0*u[IX(i, j)];
@@ -125,6 +127,7 @@ void advect(const int N, const int b,
 	cout << "t0 = " << t0 << endl;
 	cout << "s1 = " << s1 << endl;
 	cout << "t1 = " << t1 << endl;
+	cout << "d0[i0, j0] = " << d0[IX(i0, j0)] << endl;
 	cout << "( " << i << ", " << j << " )" << endl;
 	cout << "s0t0 = " << s0t0 << endl;
 	cout << "s0t1 = " << s0t1 << endl;
@@ -205,33 +208,55 @@ void project(const int N,
     }
   }
 
+  check_nans(N, v, "v in project before set_bnd");
+  check_nans(N, u, "u in project before set_bnd");
+  
   set_bnd(N, 1, u);
   set_bnd(N, 2, v);
+
+  check_nans(N, v, "v in project");
+  check_nans(N, u, "u in project");
 
 }
 
 void vel_step(const int N,
 	      float* u, float* v, float* u0, float* v0,
 	      const float visc, const float dt) {
+
+  cout << "Adding source" << endl;
+
   add_source(N, u, u0, dt);
   add_source(N, v, v0, dt);
 
+  check_nans(N, u, "u");
+  check_nans(N, v, "v");
+
+  check_nans(N, u0, "u0");
+  check_nans(N, v0, "v0");
 
   SWAP(u0, u);
   diffuse(N, 1, u, u0, visc, dt);
   SWAP(v0, v);
   diffuse(N, 2, v, v0, visc, dt);
 
+  check_nans(N, u, "u after diffuse");
+  check_nans(N, v, "v after diffuse");
+
+  check_nans(N, u0, "u0 after diffuse");
+  check_nans(N, v0, "v0 after diffuse");
+  
   project(N, u, v, u0, v0);
+
+  cout << "Done with diffuse and project" << endl;
 
   SWAP(u0, u);
   SWAP(v0, v);
 
-  check_nans(N, u);
-  check_nans(N, v);
+  check_nans(N, u, "u after diffuse project");
+  check_nans(N, v, "v");
 
-  check_nans(N, u0);
-  check_nans(N, v0);
+  check_nans(N, u0, "u0");
+  check_nans(N, v0, "v0");
   
   // Advection of velocity?
   cout << "Advect 1" << endl;
@@ -239,7 +264,7 @@ void vel_step(const int N,
 
   cout << "Done with advect 1" << endl;
 
-  check_nans(N, u);
+  check_nans(N, u, "u");
   //check_nans(N, v);
 
   //check_nans(N, u0);

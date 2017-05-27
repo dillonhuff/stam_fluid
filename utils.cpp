@@ -6,10 +6,11 @@
 
 using namespace std;
 
-void check_nans(const int N, float* x) {
-  for (int i = 1; i <= N; i++) {
-    for (int j = 1; j <= N; j++) {
-      if (isnan(x[i])) {
+void check_nans(const int N, float* x, const std::string& s) {
+  for (int i = 0; i < N + 2; i++) {
+    for (int j = 0; j < N + 2; j++) {
+      if (isnan(x[IX(i, j)])) {
+	cout << "In " << s << " ";
 	cout << "( " << i << " , " << j << " )" << endl;
 	assert(false);
       }
