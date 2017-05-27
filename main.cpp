@@ -32,11 +32,15 @@ void set_bnd(const int N, const int b, float* x) {
     x[IX(i, N + 1)] = b == 2 ? -x[IX(i, N)] : x[IX(i, N)];
   }
 
+  check_nans(N, x, "in bound b = " + std::to_string(b));
+
   // Set corners
   x[IX(0, 0)] = 0.5*( x[IX(1, 0)] + x[IX(0, 1)] );
   x[IX(0, N + 1)] = 0.5*( x[IX(0, N)] + x[IX(1, N + 1)] );
   x[IX(N + 1, 0)] = 0.5*( x[IX(N, 0)] + x[IX(N + 1, 1)] );
   x[IX(N + 1, N + 1)] = 0.5*( x[IX(N + 1, N)] + x[IX(N, N + 1)] );
+
+  check_nans(N, x, "in bound b after corner = " + std::to_string(b));
 
 }
 
@@ -319,8 +323,8 @@ int main() {
   for (int i = 1; i <= N; i++) {
     for (int j = 1; j <= N; j++) {
 
-      u_prev[IX(i, j)] = cube_vel_x / 2.0; //cube_vel_x;//random_float(0, 1);
-      v_prev[IX(i, j)] = -1*cube_vel_y / 2.0; //cube_vel_y;//-1*u_prev[i];//random_float(0, 1);
+      u_prev[IX(i, j)] = cube_vel_x; //cube_vel_x;//random_float(0, 1);
+      v_prev[IX(i, j)] = cube_vel_y; //cube_vel_y;//-1*u_prev[i];//random_float(0, 1);
 
       u[IX(i, j)] = cube_vel_x;//random_float(0, 1);
       v[IX(i, j)] = -1*cube_vel_y;//random_float(0, 1);
