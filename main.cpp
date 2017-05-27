@@ -334,8 +334,8 @@ int main() {
   for (int i = 1; i <= N; i++) {
     for (int j = 1; j <= N; j++) {
 
-      u_prev[IX(i, j)] = cube_vel_x; //cube_vel_x;//random_float(0, 1);
-      v_prev[IX(i, j)] = cube_vel_y; //cube_vel_y;//-1*u_prev[i];//random_float(0, 1);
+      u_prev[IX(i, j)] = 0.0; //cube_vel_x / 1000000; //cube_vel_x;//random_float(0, 1);
+      v_prev[IX(i, j)] = 0.0; //-1*cube_vel_y / 1000000; //cube_vel_y;//-1*u_prev[i];//random_float(0, 1);
 
       u[IX(i, j)] = cube_vel_x;//random_float(0, 1);
       v[IX(i, j)] = -1*cube_vel_y;//random_float(0, 1);
