@@ -204,11 +204,22 @@ void project(const int N,
     set_bnd(N, 0, p);
   }
 
+  check_nans(N, p, "p in project before u, v set");
+  check_nans(N, div, "div in project before u, v, set");
+  
   // Update original quantities
   for (int i = 1; i <= N; i++) {
     for (int j = 1; j <= N; j++) {
+      double old_v = v[IX(i, j)];
       u[IX(i, j)] -= 0.5*(p[IX(i + 1, j)] - p[IX(i - 1, j)]) / h;
       v[IX(i, j)] -= 0.5*(p[IX(i, j + 1)] - p[IX(i, j - 1)]) / h;
+
+      if (isinf(v[IX(i, j)])) {
+	cout << "old v = " << old_v << endl;
+	cout << "subtracted = " << 0.5*(p[IX(i + 1, j)] - p[IX(i - 1, j)]) / h << endl;
+	assert(!isinf(v[IX(i, j)]));
+	assert(!isinf(u[IX(i, j)]));
+      }
     }
   }
 
