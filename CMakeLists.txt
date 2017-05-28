@@ -13,7 +13,7 @@ SET(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} ${EXTRA_CXX_COMPILE_FLAGS}")
 
 INCLUDE_DIRECTORIES(./src/)
 
-SET(CPP_FILES main.cpp visualize.cpp utils.cpp)
+SET(CPP_FILES main.cpp visualize.cpp utils.cpp fluid.cpp)
 
 SET(TEST_FILES )
 

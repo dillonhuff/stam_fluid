@@ -34,3 +34,10 @@ float array_max(const int N, float* densities) {
   return *max_elem;
 }
 
+float random_float(float a, float b) {
+    float random = ((float) rand()) / (float) RAND_MAX;
+    float diff = b - a;
+    float r = random * diff;
+    return a + r;
+}
+
